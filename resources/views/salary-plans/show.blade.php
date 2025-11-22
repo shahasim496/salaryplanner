@@ -489,8 +489,8 @@
                     <input id="edit_actual_amount" type="number" step="0.01" name="actual_amount" placeholder="Enter actual amount when paid">
                 </div>
                 <div class="form-field">
-                    <label for="edit_is_paid" style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                        <input id="edit_is_paid" type="checkbox" name="is_paid" value="1" style="width:auto;">
+                    <label for="edit_is_paid" style="display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; color:var(--text-dark);">
+                        <input id="edit_is_paid" type="checkbox" name="is_paid" value="1" style="width:18px !important; height:18px !important; min-width:18px !important; min-height:18px !important; margin:0 !important; padding:0 !important; cursor:pointer; accent-color:#2563eb;">
                         <span>Mark as Paid</span>
                     </label>
                 </div>

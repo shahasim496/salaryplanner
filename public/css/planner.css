@@ -413,6 +413,39 @@
     resize: vertical;
 }
 
+/* Checkbox styles */
+input[type="checkbox"] {
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    cursor: pointer;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+}
+
+.form-field label[for*="is_paid"],
+.form-field label[for*="paid"] {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    cursor: pointer !important;
+}
+
+.form-field label[for*="is_paid"] input[type="checkbox"],
+.form-field label[for*="paid"] input[type="checkbox"] {
+    width: 18px !important;
+    height: 18px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 2px solid var(--panel-border) !important;
+    border-radius: 4px !important;
+    background: #fff !important;
+    appearance: auto !important;
+    -webkit-appearance: checkbox !important;
+    -moz-appearance: checkbox !important;
+}
+
 .expense-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
