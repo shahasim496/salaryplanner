@@ -20,6 +20,12 @@
                         <h2>Monthly salary plans</h2>
                         <span>Listing only, with quick access to view or edit.</span>
                     </div>
+                    <a href="{{ route('salary-plans.create') }}" class="primary-btn" style="display:inline-flex; align-items:center; gap:8px; color:white;">
+                        <svg style="width:20px; height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                        <span style="color:white;">Create Plan</span>
+                    </a>
                 </div>
 
                 @if($salaryPlans->count())

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SalaryPlanController;
+use App\Http\Controllers\LoanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,6 +14,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
     Route::resource('salary-plans', SalaryPlanController::class);
+    Route::resource('loans', LoanController::class);
+    
+    // Loan entries and payments
+    Route::post('loans/{id}/entries', [LoanController::class, 'addEntry'])->name('loans.add-entry');
+    Route::post('loans/{id}/payments', [LoanController::class, 'addPayment'])->name('loans.add-payment');
+    Route::delete('loans/{loanId}/entries/{entryId}', [LoanController::class, 'deleteEntry'])->name('loans.delete-entry');
+    Route::delete('loans/{loanId}/payments/{paymentId}', [LoanController::class, 'deletePayment'])->name('loans.delete-payment');
     
     // Additional routes for salary plan items
     Route::post('salary-plans/{id}/salary-items', [SalaryPlanController::class, 'addSalaryItem'])->name('salary-plans.add-item');
