@@ -34,6 +34,12 @@
             </svg>
             Loans
         </a>
+        <a href="{{ route('investments.index') }}" class="sidebar-link {{ $active === 'investments' ? 'active' : '' }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+            Investments
+        </a>
         @if (Route::has('profile.show'))
             <a href="{{ route('profile.show') }}" class="sidebar-link {{ $active === 'profile' ? 'active' : '' }}">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
