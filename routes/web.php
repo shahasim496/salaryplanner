@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SalaryPlanController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\InvestmentController;
+use App\Http\Controllers\DailySpendingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,6 +18,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('salary-plans', SalaryPlanController::class);
     Route::resource('loans', LoanController::class);
     Route::resource('investments', InvestmentController::class);
+    Route::resource('daily-spendings', DailySpendingController::class);
     
     // Loan entries and payments
     Route::post('loans/{id}/entries', [LoanController::class, 'addEntry'])->name('loans.add-entry');
@@ -41,6 +43,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     Route::put('salary-plans/{planId}/expenses/{expenseId}', [SalaryPlanController::class, 'updateExpense'])->name('salary-plans.update-expense');
     Route::put('salary-plans/{planId}/savings/{savingId}', [SalaryPlanController::class, 'updateSaving'])->name('salary-plans.update-saving');
+    
+    // API route for getting plan categories
+    Route::get('salary-plans/{id}/expenses', [SalaryPlanController::class, 'getExpenseCategories'])->name('salary-plans.expense-categories');
 });
 
 Route::middleware('auth')->group(function () {

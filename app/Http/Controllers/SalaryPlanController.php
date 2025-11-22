@@ -631,6 +631,22 @@ class SalaryPlanController extends Controller
     }
 
     /**
+     * Get expense categories for a plan (API endpoint)
+     */
+    public function getExpenseCategories(string $id)
+    {
+        $salaryPlan = SalaryPlan::where('user_id', Auth::id())
+            ->findOrFail($id);
+
+        $categories = Expense::where('salary_plan_id', $salaryPlan->id)
+            ->distinct()
+            ->pluck('category')
+            ->toArray();
+
+        return response()->json(['categories' => $categories]);
+    }
+
+    /**
      * Default quick-entry categories.
      */
     protected function quickEntryCategories(): array
