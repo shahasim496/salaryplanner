@@ -14,6 +14,9 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         
+        <!-- Planner Styles -->
+        <link rel="stylesheet" href="{{ asset('css/planner.css') }}">
+        
         <style>
             body {
                 font-family: 'Inter', sans-serif;
