@@ -92,6 +92,107 @@
                     <canvas id="savingsProgressChart"></canvas>
                 </div>
             </section>
+
+            <section class="panel-grid">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>Loans Overview</h3>
+                        <a href="{{ route('loans.index') }}" style="font-weight:700; color:var(--primary); text-decoration:none;">
+                            View all →
+                        </a>
+                    </div>
+                    <div class="stats-grid" style="grid-template-columns:repeat(2, 1fr); margin-top:16px;">
+                        <div class="stat-card">
+                            <div class="stat-label">Owed to Me</div>
+                            <div class="stat-value" style="color:#16a34a;">PKR{{ number_format($loansOwedToMe ?? 0, 2) }}</div>
+                            <div class="stat-hint">Total: PKR{{ number_format($totalLoansOwedToMe ?? 0, 2) }}</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">I Owe</div>
+                            <div class="stat-value" style="color:#dc2626;">PKR{{ number_format($loansIOwe ?? 0, 2) }}</div>
+                            <div class="stat-hint">Total: PKR{{ number_format($totalLoansIOwe ?? 0, 2) }}</div>
+                        </div>
+                    </div>
+                    @if(isset($recentLoans) && $recentLoans->count() > 0)
+                        <div style="margin-top:20px; padding-top:20px; border-top:1px solid rgba(0,0,0,0.1);">
+                            <div style="font-size:0.85rem; color:var(--muted); margin-bottom:12px; font-weight:600;">Recent Loans</div>
+                            <div style="display:flex; flex-direction:column; gap:8px;">
+                                @foreach($recentLoans as $loan)
+                                    <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0;">
+                                        <div>
+                                            <div style="font-weight:600; color:var(--text-dark);">{{ $loan->person_name }}</div>
+                                            <div style="font-size:0.75rem; color:var(--muted);">
+                                                <span class="badge {{ $loan->loan_type === 'owed_to_me' ? 'badge-success' : 'badge-danger' }}" style="font-size:0.7rem; padding:2px 6px;">
+                                                    {{ $loan->loan_type === 'owed_to_me' ? 'Owed to Me' : 'I Owe' }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div style="text-align:right;">
+                                            <div style="font-weight:600; color:{{ $loan->remaining_amount > 0 ? '#dc2626' : '#16a34a' }};">
+                                                PKR{{ number_format($loan->remaining_amount, 2) }}
+                                            </div>
+                                            <div style="font-size:0.7rem; color:var(--muted);">{{ $loan->status }}</div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>Investments Overview</h3>
+                        <a href="{{ route('investments.index') }}" style="font-weight:700; color:var(--primary); text-decoration:none;">
+                            View all →
+                        </a>
+                    </div>
+                    <div class="stats-grid" style="grid-template-columns:repeat(2, 1fr); margin-top:16px;">
+                        <div class="stat-card">
+                            <div class="stat-label">Total Invested</div>
+                            <div class="stat-value" style="color:#2563eb;">PKR{{ number_format($totalInvested ?? 0, 2) }}</div>
+                            <div class="stat-hint">Withdrawn: PKR{{ number_format($totalWithdrawn ?? 0, 2) }}</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Current Value</div>
+                            <div class="stat-value {{ ($totalCurrentValue ?? 0) >= ($totalInvested ?? 0) - ($totalWithdrawn ?? 0) ? 'positive' : 'negative' }}">
+                                PKR{{ number_format($totalCurrentValue ?? 0, 2) }}
+                            </div>
+                            <div class="stat-hint">
+                                Profit: PKR{{ number_format($totalInvestmentProfit ?? 0, 2) }} · 
+                                Loss: PKR{{ number_format($totalInvestmentLoss ?? 0, 2) }}
+                            </div>
+                        </div>
+                    </div>
+                    @if(isset($recentInvestments) && $recentInvestments->count() > 0)
+                        <div style="margin-top:20px; padding-top:20px; border-top:1px solid rgba(0,0,0,0.1);">
+                            <div style="font-size:0.85rem; color:var(--muted); margin-bottom:12px; font-weight:600;">Recent Investments</div>
+                            <div style="display:flex; flex-direction:column; gap:8px;">
+                                @foreach($recentInvestments as $investment)
+                                    <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0;">
+                                        <div>
+                                            <div style="font-weight:600; color:var(--text-dark);">{{ $investment->investment_name }}</div>
+                                            <div style="font-size:0.75rem; color:var(--muted);">
+                                                <span class="badge {{ $investment->status === 'Active' ? 'badge-success' : 'badge-gray' }}" style="font-size:0.7rem; padding:2px 6px;">
+                                                    {{ $investment->status }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div style="text-align:right;">
+                                            <div style="font-weight:600; color:{{ $investment->current_value >= ($investment->total_invested - $investment->total_withdrawn) ? '#16a34a' : '#dc2626' }};">
+                                                PKR{{ number_format($investment->current_value, 2) }}
+                                            </div>
+                                            <div style="font-size:0.7rem; color:var(--muted);">
+                                                Invested: PKR{{ number_format($investment->total_invested, 2) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </section>
         </main>
         <div id="dashboard-data"
              data-monthly-trend='@json($monthlyTrend ?? [])'

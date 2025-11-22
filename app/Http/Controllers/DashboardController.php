@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\SalaryPlan;
+use App\Models\Loan;
+use App\Models\Investment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -63,6 +65,35 @@ class DashboardController extends Controller
         $totalSavings = SalaryPlan::where('user_id', $userId)->sum('total_savings');
         $totalRemaining = SalaryPlan::where('user_id', $userId)->sum('remaining_amount');
 
+        // Loans summary
+        $loansOwedToMe = Loan::where('user_id', $userId)
+            ->where('loan_type', 'owed_to_me')
+            ->sum('remaining_amount');
+        $loansIOwe = Loan::where('user_id', $userId)
+            ->where('loan_type', 'owed_by_me')
+            ->sum('remaining_amount');
+        $totalLoansOwedToMe = Loan::where('user_id', $userId)
+            ->where('loan_type', 'owed_to_me')
+            ->sum('total_loaned');
+        $totalLoansIOwe = Loan::where('user_id', $userId)
+            ->where('loan_type', 'owed_by_me')
+            ->sum('total_loaned');
+        $recentLoans = Loan::where('user_id', $userId)
+            ->orderBy('updated_at', 'desc')
+            ->limit(5)
+            ->get();
+
+        // Investments summary
+        $totalInvested = Investment::where('user_id', $userId)->sum('total_invested');
+        $totalWithdrawn = Investment::where('user_id', $userId)->sum('total_withdrawn');
+        $totalInvestmentProfit = Investment::where('user_id', $userId)->sum('total_profit');
+        $totalInvestmentLoss = Investment::where('user_id', $userId)->sum('total_loss');
+        $totalCurrentValue = Investment::where('user_id', $userId)->sum('current_value');
+        $recentInvestments = Investment::where('user_id', $userId)
+            ->orderBy('updated_at', 'desc')
+            ->limit(5)
+            ->get();
+
         return view('dashboard', compact(
             'currentPlan',
             'allPlans',
@@ -72,7 +103,18 @@ class DashboardController extends Controller
             'totalIncome',
             'totalExpenses',
             'totalSavings',
-            'totalRemaining'
+            'totalRemaining',
+            'loansOwedToMe',
+            'loansIOwe',
+            'totalLoansOwedToMe',
+            'totalLoansIOwe',
+            'recentLoans',
+            'totalInvested',
+            'totalWithdrawn',
+            'totalInvestmentProfit',
+            'totalInvestmentLoss',
+            'totalCurrentValue',
+            'recentInvestments'
         ));
     }
 }

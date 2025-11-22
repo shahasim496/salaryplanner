@@ -25,7 +25,7 @@
                         <a href="{{ route('login') }}" class="ghost-btn">Log in</a>
                     @endif
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="primary-btn">Create free plan</a>
+                        <a href="{{ route('register') }}" class="primary-btn">Register</a>
                     @endif
                 </div>
             </header>
@@ -38,7 +38,7 @@
                         <p>Break down your paycheck into essentials, goals, and guilt-free spending. Salary Planner keeps every decision visible so you stick to what matters most.</p>
                         <div class="cta-buttons">
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="primary-btn">Start a plan</a>
+                                <a href="{{ route('register') }}" class="primary-btn">Register</a>
                             @endif
                             @if (Route::has('login'))
                                 <a href="{{ route('login') }}" class="ghost-btn">Log in</a>
