@@ -5,6 +5,23 @@ use Illuminate\Support\Facades\DB;
 
 require __DIR__.'/../vendor/autoload.php';
 
+// Set production environment BEFORE bootstrapping Laravel
+// This prevents loading dev dependencies like Pail
+putenv('APP_ENV=production');
+$_ENV['APP_ENV'] = 'production';
+$_SERVER['APP_ENV'] = 'production';
+
+// Clear package discovery cache files that might have dev dependencies registered
+$cacheFiles = [
+    __DIR__.'/../bootstrap/cache/packages.php',
+    __DIR__.'/../bootstrap/cache/services.php',
+];
+foreach ($cacheFiles as $cacheFile) {
+    if (file_exists($cacheFile)) {
+        @unlink($cacheFile);
+    }
+}
+
 // Ensure database directory exists BEFORE bootstrapping Laravel
 $dbDir = __DIR__.'/../database';
 if (!is_dir($dbDir)) {
