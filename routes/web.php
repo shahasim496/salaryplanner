@@ -14,6 +14,8 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/qr-code', [\App\Http\Controllers\QrCodeController::class, 'generate'])->name('qr-code');
+    Route::get('/api/qr-data', [\App\Http\Controllers\QrCodeController::class, 'getQrData'])->name('qr-data');
     
     Route::resource('salary-plans', SalaryPlanController::class);
     Route::resource('loans', LoanController::class);

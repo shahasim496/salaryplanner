@@ -26,6 +26,10 @@ Route::prefix('v1')->group(function () {
     Route::post('/login', [ApiAuthController::class, 'login'])->name('api.login');
     Route::post('/forgot-password', [ApiAuthController::class, 'forgotPassword'])->name('api.forgot-password');
     Route::post('/reset-password', [ApiAuthController::class, 'resetPassword'])->name('api.reset-password');
+    
+    // QR Code routes (public for mobile app)
+    Route::post('/qr/verify', [\App\Http\Controllers\Api\ApiQrCodeController::class, 'verify'])->name('api.qr.verify');
+    Route::get('/qr/check-status', [\App\Http\Controllers\Api\ApiQrCodeController::class, 'checkStatus'])->name('api.qr.check-status');
 });
 
 // Protected routes (authentication required)

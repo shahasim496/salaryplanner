@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SalaryPlan;
 use App\Models\Loan;
 use App\Models\Investment;
+use App\Models\QrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -94,6 +95,9 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
+        // Generate QR code for mobile app login
+        $qrCode = \App\Models\QrCode::generateForUser($userId);
+
         return view('dashboard', compact(
             'currentPlan',
             'allPlans',
@@ -114,7 +118,8 @@ class DashboardController extends Controller
             'totalInvestmentProfit',
             'totalInvestmentLoss',
             'totalCurrentValue',
-            'recentInvestments'
+            'recentInvestments',
+            'qrCode'
         ));
     }
 }

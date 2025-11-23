@@ -5,10 +5,15 @@
 
     RewriteEngine On
 
-    # Bypass bot protection for API routes
-    # Add headers that help identify API requests
+    # Try to bypass bot protection for API routes
+    # Set environment variables that might help identify API requests
     RewriteCond %{REQUEST_URI} ^/api/
-    RewriteRule .* - [E=HTTP_X_API_REQUEST:1]
+    RewriteRule .* - [E=HTTP_X_API_REQUEST:1,E=NOBOTCHECK:1]
+    
+    # Add custom headers for API requests
+    <IfModule mod_headers.c>
+        Header set X-API-Request "true" env=HTTP_X_API_REQUEST
+    </IfModule>
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
