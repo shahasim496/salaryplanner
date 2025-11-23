@@ -5,6 +5,11 @@
 
     RewriteEngine On
 
+    # Bypass bot protection for API routes
+    # Add headers that help identify API requests
+    RewriteCond %{REQUEST_URI} ^/api/
+    RewriteRule .* - [E=HTTP_X_API_REQUEST:1]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
